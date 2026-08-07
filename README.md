@@ -1,55 +1,77 @@
-AI-Powered Fake Job Detection and Company Verification System
-📌 Overview
+# 📚 AI-Powered Fake Job Detection and Company Verification System
 
-AI-Powered Fake Job Detection and Company Verification System is an AI-driven web application designed to protect job seekers from fraudulent job postings and recruitment scams. The system uses Artificial Intelligence, Machine Learning, and Natural Language Processing (NLP) to analyze job descriptions, recruiter information, company details, salary patterns, and website authenticity. It classifies job postings as Genuine or Fake, provides a Fraud Risk Score, verifies company legitimacy, and alerts users about suspicious job offers in real time.
+## 📌 Overview
 
-🚀 Features
-User Registration & Secure Login
-AI-Based Fake Job Detection
-Company Verification
-Recruiter Profile Validation
-Fraud Risk Score Generation
-NLP-Based Job Description Analysis
-Suspicious Email & Domain Detection
-Job Scam Reporting
-Resume Upload & Job Matching
-Admin Dashboard
-Real-Time Notifications
-Responsive User Interface
-🛠️ Tech Stack
-Frontend
-React.js
-HTML5
-CSS3
-JavaScript (ES6)
-Bootstrap / Tailwind CSS
-Backend
-Node.js
-Express.js
-Database
-MongoDB Atlas
-AI / Machine Learning
-Python
-Scikit-learn
-TensorFlow
-Pandas
-NumPy
-Natural Language Processing (NLP)
-Hugging Face Transformers (BERT)
-spaCy
-NLTK
-APIs
-Google Safe Browsing API
-Whois API (Domain Verification)
-Google Maps API (Optional)
-Deployment
-Vercel (Frontend)
-Render (Backend & AI)
-MongoDB Atlas (Database)
-Version Control
-Git & GitHub
-📂 Project Structure
-AI-Fake-Job-Detection-System
+**AI-Powered Fake Job Detection and Company Verification System** is an AI-driven web application designed to protect job seekers from fraudulent job postings and online recruitment scams. The system uses Artificial Intelligence (AI), Machine Learning (ML), and Natural Language Processing (NLP) to analyze job descriptions, recruiter information, company details, salary patterns, and email domains. It predicts whether a job posting is **Genuine** or **Fake**, verifies company authenticity, generates a **Fraud Risk Score**, and provides real-time scam alerts to help users make informed career decisions.
+
+
+# 🚀 Features
+
+* User Registration & Secure Login
+* AI-Based Fake Job Detection
+* Company Verification
+* Recruiter Profile Validation
+* NLP-Based Job Description Analysis
+* Fraud Risk Score Generation
+* Suspicious Email & Domain Detection
+* Job Scam Reporting
+* Resume Upload & Job Matching
+* Real-Time Scam Alerts
+* Admin Dashboard
+* Analytics & Reports
+* Responsive User Interface
+
+# 🛠️ Tech Stack
+
+### Frontend
+
+* React.js
+* HTML5
+* CSS3
+* JavaScript
+* Bootstrap
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB Atlas
+
+### AI / Machine Learning
+
+* Python
+* Scikit-learn
+* Flask
+
+### Natural Language Processing (NLP)
+
+* NLTK
+* spaCy
+* BERT (Transformer Model)
+
+### APIs
+
+* Google Safe Browsing API
+* Whois API (Company Domain Verification)
+
+### Deployment
+
+* Vercel (Frontend)
+* Render (Backend & AI)
+* MongoDB Atlas (Database)
+
+### Version Control
+
+* Git & GitHub
+
+
+# 📂 Project Structure
+
+```text
+AI-Powered-Fake-Job-Detection
 │
 ├── client/
 │   ├── public/
@@ -66,7 +88,7 @@ AI-Fake-Job-Detection-System
 │   └── package.json
 │
 ├── ai-model/
-│   ├── fake_job_prediction.py
+│   ├── fake_job_model.py
 │   ├── model.pkl
 │   ├── tokenizer.pkl
 │   └── requirements.txt
@@ -80,10 +102,13 @@ AI-Fake-Job-Detection-System
 ├── requirements.txt
 │
 └── .gitignore
-▶️ Installation
-git clone https://github.com/yourusername/AI-Fake-Job-Detection-System.git
 
-cd AI-Fake-Job-Detection-System
+# ▶️ Installation
+
+```bash
+git clone https://github.com/yourusername/AI-Powered-Fake-Job-Detection.git
+
+cd AI-Powered-Fake-Job-Detection
 
 # Install Backend Dependencies
 npm install
@@ -106,50 +131,62 @@ npm start
 
 # Run AI Model
 cd ../ai-model
-python fake_job_prediction.py
-📖 How to Use
-Register or log in to the application.
-Upload or paste a job posting.
-The AI analyzes the job description using NLP.
-The system verifies the company and recruiter details.
-A Fraud Risk Score and prediction (Genuine/Fake) are generated.
-Users can view detailed reasons behind the prediction.
-Report suspicious job postings to help improve the detection system.
-Admin users can monitor reports, manage users, and update the AI model.
-🧠 AI Concepts Used
-Artificial Intelligence (AI)
-Machine Learning
-Natural Language Processing (NLP)
-Transformer-Based Language Models (BERT)
-Text Classification
-Fraud Detection
-Explainable AI (XAI)
-Company & Domain Verification
-Real-Time Risk Assessment
-📊 Modules
-User Authentication
-Fake Job Detection
-NLP-Based Job Analysis
-Company Verification
-Recruiter Validation
-Fraud Risk Score Generation
-Job Scam Reporting
-Admin Dashboard
-Analytics & Reports
-Notification System
-🎯 Project Objectives
-Detect fake job postings with high accuracy using AI.
-Protect job seekers from recruitment fraud and scams.
-Verify company and recruiter authenticity.
-Generate an explainable fraud risk score for every job posting.
-Improve trust in online recruitment platforms.
-Reduce financial and personal losses caused by fake job offers.
-👨‍💻 Developed By
+python fake_job_model.py
 
-Your Name
 
-Department: Computer and Communication Engineering
+# 📖 How to Use
 
-College: V.S.B Engineering College
+1. Register or log in to the application.
+2. Upload or paste a job description into the system.
+3. The AI model analyzes the job posting using NLP and Machine Learning algorithms.
+4. The system verifies company information, recruiter details, website authenticity, and email domain.
+5. A **Fraud Risk Score** is generated, and the job is classified as **Genuine** or **Fake**.
+6. Users receive an explanation highlighting suspicious elements found in the job posting.
+7. Suspicious job postings can be reported to improve future detection.
+8. Administrators can monitor reports, manage users, and update AI models through the Admin Dashboard.
 
-Guide: Guide Name
+
+# 🧠 AI Concepts Used
+
+* Artificial Intelligence (AI)
+* Machine Learning (ML)
+* Natural Language Processing (NLP)
+* Text Classification
+* Fraud Detection
+* Explainable AI (XAI)
+* Company Verification
+* Domain Reputation Analysis
+* Real-Time Risk Prediction
+* REST API Integration
+
+
+# 📊 Modules
+
+* User Authentication
+* AI Fake Job Detection
+* NLP Job Description Analysis
+* Company Verification Module
+* Recruiter Validation
+* Fraud Risk Score Generator
+* Email & Domain Verification
+* Job Scam Reporting
+* Resume Upload & Job Matching
+* Admin Dashboard
+* Analytics & Reports
+
+# 🎯 Project Objectives
+
+* Detect fraudulent job postings with high accuracy using AI.
+* Protect job seekers from online recruitment scams.
+* Verify company and recruiter authenticity before users apply.
+* Generate an explainable fraud risk score for every job posting.
+* Improve trust and transparency in online recruitment platforms.
+* Reduce financial loss, identity theft, and cyber fraud caused by fake job offers.
+* Assist organizations and job portals in identifying suspicious recruitment activities.
+* Promote a secure digital hiring ecosystem through intelligent scam detection.
+
+# 👨‍💻 Developed By
+
+**Abinaya R**
+
+
