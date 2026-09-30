@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Fake Job Detection & Company Verification System</title>
+  <meta name="description" content="Detect fraudulent recruitment scams, verify company legitimacy, and evaluate job posting safety with AI-driven NLP and Machine Learning.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Glow Effects -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span class="brand-pulse"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">JobShield <span class="badge-ai">AI</span></span>
+          <span class="brand-subtitle">Fake Job & Recruiter Verification</span>
+        </div>
+      </div>
+
+      <div class="nav-center-stats">
+        <div class="stat-pill">
+          <span class="stat-dot green"></span>
+          <span class="stat-label">Model:</span>
+          <span class="stat-val" id="modelEngineStatus">Logistic Regression + TF-IDF</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-dot blue"></span>
+          <span class="stat-label">API Status:</span>
+          <span class="stat-val" id="apiConnectionStatus">Checking Server...</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn-ghost" id="presetDropdownBtn" title="Load sample postings to test">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Test Presets <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="preset-menu hidden" id="presetMenu">
+          <div class="preset-header">Select a realistic test case:</div>
+          <button class="preset-item danger" data-preset="scam-telegram">
+            <span class="preset-badge red">Scam</span>
+            <div class="preset-info">
+              <strong>Crypto Data Entry Scam</strong>
+              <small>Telegram chat, $500/day, wire deposit</small>
+            </div>
+          </button>
+          <button class="preset-item danger" data-preset="scam-fee">
+            <span class="preset-badge red">Scam</span>
+            <div class="preset-info">
+              <strong>Remote Administrative Assistant</strong>
+              <small>Gmail contact, upfront equipment fee</small>
+            </div>
+          </button>
+          <button class="preset-item success" data-preset="legit-software">
+            <span class="preset-badge green">Genuine</span>
+            <div class="preset-info">
+              <strong>Senior Full Stack Engineer</strong>
+              <small>Stripe Careers, domain verified, corporate benefits</small>
+            </div>
+          </button>
+          <button class="preset-item success" data-preset="legit-marketing">
+            <span class="preset-badge green">Genuine</span>
+            <div class="preset-info">
+              <strong>Product Marketing Specialist</strong>
+              <small>Authentic company, verified requirements</small>
+            </div>
+          </button>
+        </div>
+
+        <button class="btn-primary" id="openReportModalBtn">
+          <i class="fa-solid fa-flag"></i> Report Scam
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-badge">
+        <i class="fa-solid fa-lock"></i> Fraud Protection System • Trained on EMSCAD Dataset
+      </div>
+      <h1 class="hero-title">
+        Detect Fake Job Postings with <span class="gradient-text">Machine Learning</span>
+      </h1>
+      <p class="hero-desc">
+        Evaluate job descriptions, recruiter email domains, company profiles, and salary credibility using Natural Language Processing (NLP) & Logistic Regression to defend yourself against employment fraud.
+      </p>
+
+      <!-- Security Metric Counters -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon"><i class="fa-solid fa-brain"></i></div>
+          <div class="metric-content">
+            <div class="metric-number">98.2%</div>
+            <div class="metric-label">Scam Detection Accuracy</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="metric-content">
+            <div class="metric-number">&lt; 150ms</div>
+            <div class="metric-label">Real-Time Risk Scoring</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="fa-solid fa-at"></i></div>
+          <div class="metric-content">
+            <div class="metric-number">Domain &amp; Email</div>
+            <div class="metric-label">Recruiter Authenticity Check</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon"><i class="fa-solid fa-shield-cat"></i></div>
+          <div class="metric-content">
+            <div class="metric-number">Explainable AI</div>
+            <div class="metric-label">Transparent Threat Highlighting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Application Workspace -->
+  <main class="main-container">
+    <div class="workspace-grid">
+      
+      <!-- Left Panel: Job Input & Analysis Parameters -->
+      <section class="panel input-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <div class="panel-icon"><i class="fa-solid fa-file-invoice"></i></div>
+            <div>
+              <h2 class="panel-title">Job Details &amp; Recruiter Info</h2>
+              <p class="panel-subtitle">Paste the full job posting to run multi-vector risk verification</p>
+            </div>
+          </div>
+          <button class="btn-sm btn-outline" id="clearFormBtn" title="Clear all fields">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+        </div>
+
+        <!-- Quick Preset Quick-bar -->
+        <div class="quick-preset-bar">
+          <span class="quick-preset-label"><i class="fa-solid fa-bolt"></i> Quick Test:</span>
+          <button type="button" class="tag-btn tag-danger" data-preset="scam-telegram">Scam (Telegram & Wire)</button>
+          <button type="button" class="tag-btn tag-danger" data-preset="scam-fee">Scam (Equipment Fee)</button>
+          <button type="button" class="tag-btn tag-success" data-preset="legit-software">Genuine (Tech Lead)</button>
+        </div>
+
+        <form id="jobForm" class="job-form" autocomplete="off">
+          
+          <!-- Row 1: Title and Company -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="jobTitle" class="form-label">
+                <i class="fa-solid fa-briefcase"></i> Job Title <span class="required">*</span>
+              </label>
+              <input type="text" id="jobTitle" class="form-control" placeholder="e.g. Remote Data Entry Operator" required>
+            </div>
+
+            <div class="form-group flex-1">
+              <label for="companyName" class="form-label">
+                <i class="fa-solid fa-building"></i> Company Name <span class="required">*</span>
+              </label>
+              <input type="text" id="companyName" class="form-control" placeholder="e.g. Global Tech Solutions Ltd" required>
+            </div>
+          </div>
+
+          <!-- Row 2: Recruiter Email & Website -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="recruiterEmail" class="form-label">
+                <i class="fa-solid fa-envelope"></i> Recruiter / Contact Email
+                <span class="hint-badge" title="Scammers frequently use free domains like @gmail.com or @yahoo.com">Domain check</span>
+              </label>
+              <div class="input-with-icon">
+                <input type="email" id="recruiterEmail" class="form-control" placeholder="e.g. hr@globaltechsolutions.com or hr123@gmail.com">
+                <span class="domain-flag" id="domainFlagBadge"></span>
+              </div>
+            </div>
+
+            <div class="form-group flex-1">
+              <label for="companyWebsite" class="form-label">
+                <i class="fa-solid fa-globe"></i> Company Website URL
+              </label>
+              <input type="url" id="companyWebsite" class="form-control" placeholder="e.g. https://globaltechsolutions.com">
+            </div>
+          </div>
+
+          <!-- Row 3: Compensation & Employment Type -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="salaryRange" class="form-label">
+                <i class="fa-solid fa-money-bill-wave"></i> Offered Salary / Rate
+              </label>
+              <input type="text" id="salaryRange" class="form-control" placeholder="e.g. $65,000 - $85,000/yr or $500/day">
+            </div>
+
+            <div class="form-group flex-1">
+              <label for="workType" class="form-label">
+                <i class="fa-solid fa-house-laptop"></i> Employment Type
+              </label>
+              <select id="workType" class="form-control">
+                <option value="Remote">Fully Remote</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="On-site">On-site</option>
+                <option value="Contract">Freelance / Contract</option>
+                <option value="Part-time">Part-time</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Job Description -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="jobDescription" class="form-label">
+                <i class="fa-solid fa-align-left"></i> Job Description <span class="required">*</span>
+              </label>
+              <span class="char-count" id="descCharCount">0 characters</span>
+            </div>
+            <textarea id="jobDescription" class="form-control textarea" rows="5" placeholder="Paste the complete job description text here..." required></textarea>
+          </div>
+
+          <!-- Job Requirements -->
+          <div class="form-group">
+            <label for="jobRequirements" class="form-label">
+              <i class="fa-solid fa-list-check"></i> Candidate Requirements &amp; Qualifications
+            </label>
+            <textarea id="jobRequirements" class="form-control textarea" rows="3" placeholder="e.g. 2+ years experience in Python, Bachelor's degree, Git proficiency..."></textarea>
+          </div>
+
+          <!-- Company Profile -->
+          <div class="form-group">
+            <label for="companyProfile" class="form-label">
+              <i class="fa-solid fa-circle-info"></i> Company Profile / About Us
+            </label>
+            <textarea id="companyProfile" class="form-control textarea" rows="2" placeholder="Brief background about the organization, history, industry..."></textarea>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="form-actions">
+            <button type="submit" class="btn-primary btn-lg" id="submitAnalysisBtn">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+              <span class="btn-text">Run AI Fraud Analysis</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Panel: AI Results & Security Insights -->
+      <section class="panel results-panel">
+        
+        <!-- Header with Live Time and Quick Actions -->
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <div class="panel-icon cyan"><i class="fa-solid fa-shield-virus"></i></div>
+            <div>
+              <h2 class="panel-title">AI Fraud &amp; Verification Verdict</h2>
+              <p class="panel-subtitle">Multivariate risk evaluation and natural language forensics</p>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button class="btn-sm btn-outline" id="printReportBtn" title="Export or print safety report">
+              <i class="fa-solid fa-download"></i> Export Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Initial Placeholder State (Before Analysis) -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon-wrap">
+            <i class="fa-solid fa-radar fa-spin-pulse"></i>
+          </div>
+          <h3>Awaiting Job Submission</h3>
+          <p>Fill out the job details on the left or select a sample preset above to see the real-time AI risk scoring and forensic breakdown.</p>
+          <button class="btn-outline btn-sm" id="emptyPresetBtn">
+            <i class="fa-solid fa-play"></i> Load Sample &amp; Run Test
+          </button>
+        </div>
+
+        <!-- Scanning State Overlay -->
+        <div class="scanning-state hidden" id="scanningState">
+          <div class="scan-ring">
+            <div class="scan-spinner"></div>
+            <i class="fa-solid fa-shield-halved scan-icon"></i>
+          </div>
+          <h3 id="scanStepText">Extracting TF-IDF Text Features...</h3>
+          <div class="scan-progress-bar">
+            <div class="scan-progress-fill" id="scanProgressFill"></div>
+          </div>
+          <div class="scan-steps-list">
+            <span class="step-chip active" id="step1"><i class="fa-solid fa-check"></i> Text Cleaning</span>
+            <span class="step-chip" id="step2"><i class="fa-solid fa-circle-notch fa-spin"></i> TF-IDF Vectorization</span>
+            <span class="step-chip" id="step3"><i class="fa-regular fa-circle"></i> Logistic Regression</span>
+            <span class="step-chip" id="step4"><i class="fa-regular fa-circle"></i> Domain Forensics</span>
+          </div>
+        </div>
+
+        <!-- Active Results Display (Populated after analysis) -->
+        <div class="results-content hidden" id="resultsContent">
+          
+          <!-- Top Verdict Banner & Gauge Card -->
+          <div class="verdict-card" id="verdictCard">
+            <div class="gauge-container">
+              <div class="circular-meter">
+                <svg viewBox="0 0 160 160" class="meter-svg">
+                  <circle class="meter-bg" cx="80" cy="80" r="68"></circle>
+                  <circle class="meter-fill" id="meterFillCircle" cx="80" cy="80" r="68"></circle>
+                </svg>
+                <div class="meter-inner">
+                  <span class="meter-score" id="riskScoreValue">0%</span>
+                  <span class="meter-caption">FRAUD RISK</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="verdict-summary">
+              <div class="verdict-badge" id="verdictBadge">
+                <i class="fa-solid fa-circle-exclamation" id="verdictIcon"></i>
+                <span id="verdictText">ANALYZING...</span>
+              </div>
+              <h3 class="verdict-headline" id="verdictHeadline">Verification Assessment</h3>
+              <p class="verdict-explanation" id="verdictExplanation">
+                Detailed rationale will appear here after the ML classifier assesses the posting text and company metadata.
+              </p>
+              <div class="verdict-meta">
+                <span class="meta-tag"><i class="fa-solid fa-microchip"></i> Algorithm: <strong id="resAlgorithm">Logistic Regression</strong></span>
+                <span class="meta-tag"><i class="fa-solid fa-gauge-high"></i> Confidence: <strong id="resConfidence">94.8%</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multi-Factor Risk Assessment Breakdown -->
+          <div class="breakdown-section">
+            <h4 class="section-title"><i class="fa-solid fa-layer-group"></i> Multi-Vector Safety Breakdown</h4>
+            
+            <div class="risk-factors-grid">
+              
+              <!-- Factor 1: NLP Text Classifier -->
+              <div class="factor-card" id="factorNlp">
+                <div class="factor-header">
+                  <span class="factor-icon"><i class="fa-solid fa-brain"></i></span>
+                  <span class="factor-name">NLP Language Patterns</span>
+                  <span class="factor-status-pill" id="factorNlpStatus">Normal</span>
+                </div>
+                <div class="factor-meter">
+                  <div class="factor-bar" id="factorNlpBar" style="width: 15%;"></div>
+                </div>
+                <p class="factor-desc" id="factorNlpDesc">Vocabulary and syntax typical of genuine postings.</p>
+              </div>
+
+              <!-- Factor 2: Email & Domain Verification -->
+              <div class="factor-card" id="factorDomain">
+                <div class="factor-header">
+                  <span class="factor-icon"><i class="fa-solid fa-envelope-circle-check"></i></span>
+                  <span class="factor-name">Recruiter Domain Credibility</span>
+                  <span class="factor-status-pill" id="factorDomainStatus">Verified</span>
+                </div>
+                <div class="factor-meter">
+                  <div class="factor-bar" id="factorDomainBar" style="width: 10%;"></div>
+                </div>
+                <p class="factor-desc" id="factorDomainDesc">Recruiter matches corporate email domain.</p>
+              </div>
+
+              <!-- Factor 3: Financial & Upfront Fees -->
+              <div class="factor-card" id="factorFinancial">
+                <div class="factor-header">
+                  <span class="factor-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                  <span class="factor-name">Financial &amp; Fee Red Flags</span>
+                  <span class="factor-status-pill" id="factorFinancialStatus">Clean</span>
+                </div>
+                <div class="factor-meter">
+                  <div class="factor-bar" id="factorFinancialBar" style="width: 5%;"></div>
+                </div>
+                <p class="factor-desc" id="factorFinancialDesc">No suspicious equipment or processing charges detected.</p>
+              </div>
+
+              <!-- Factor 4: Interview & Onboarding Channels -->
+              <div class="factor-card" id="factorCommunication">
+                <div class="factor-header">
+                  <span class="factor-icon"><i class="fa-solid fa-comments"></i></span>
+                  <span class="factor-name">Hiring &amp; Interview Protocol</span>
+                  <span class="factor-status-pill" id="factorCommunicationStatus">Safe</span>
+                </div>
+                <div class="factor-meter">
+                  <div class="factor-bar" id="factorCommunicationBar" style="width: 8%;"></div>
+                </div>
+                <p class="factor-desc" id="factorCommunicationDesc">Standard corporate interview workflow detected.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Explainable AI (XAI) Trigger Analysis -->
+          <div class="xai-section">
+            <div class="xai-header">
+              <h4 class="section-title"><i class="fa-solid fa-highlighter"></i> Explainable AI (XAI): Flagged Keywords</h4>
+              <span class="xai-counter" id="xaiKeywordsCount">0 keywords triggered</span>
+            </div>
+            <p class="xai-note">The AI model inspects high-weight TF-IDF terms associated with fraudulent recruitment schemes:</p>
+            
+            <div class="xai-tags-container" id="xaiTagsContainer">
+              <!-- Dynamically populated tags -->
+            </div>
+
+            <!-- Context Highlight Box -->
+            <div class="xai-highlight-box">
+              <div class="highlight-title"><i class="fa-solid fa-eye"></i> Linguistic Highlight Preview:</div>
+              <div class="highlighted-text" id="highlightedTextPreview">
+                <!-- Text with marked spans -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Actionable Recommendations for Job Seekers -->
+          <div class="recommendations-card" id="recommendationsCard">
+            <h4 class="rec-title"><i class="fa-solid fa-user-shield"></i> Recommended Job Seeker Actions</h4>
+            <ul class="rec-list" id="recommendationsList">
+              <!-- Dynamically populated recommendations -->
+            </ul>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Report Scam Modal -->
+  <div class="modal-overlay hidden" id="reportModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i class="fa-solid fa-triangle-exclamation modal-icon"></i>
+          <div>
+            <h3 class="modal-title">Report Fraudulent Job Posting</h3>
+            <p class="modal-subtitle">Contribute to the scam database to safeguard the job-seeking community</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeReportModalBtn">&times;</button>
+      </div>
+
+      <form id="scamReportForm" class="modal-form">
+        <div class="form-group">
+          <label class="form-label">Scam Category <span class="required">*</span></label>
+          <select class="form-control" id="reportScamType" required>
+            <option value="upfront_fee">Upfront Equipment / Registration Fee</option>
+            <option value="check_fraud">Fake Cheque / Wire Transfer Scam</option>
+            <option value="identity_theft">Personal Identity / SSN Harvesting</option>
+            <option value="crypto_task">Crypto / Task Completion Scam (Telegram)</option>
+            <option value="impersonation">Company Impersonation / Fake Recruiter</option>
+            <option value="other">Other Suspicious Activity</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Offending Company / Recruiter Details <span class="required">*</span></label>
+          <input type="text" class="form-control" id="reportEntity" placeholder="Company name or recruiter email/handle" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Scam Evidence / Explanation <span class="required">*</span></label>
+          <textarea class="form-control textarea" id="reportEvidence" rows="3" placeholder="Describe the suspicious interactions, messages received, or demands made..." required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-ghost" id="cancelReportBtn">Cancel</button>
+          <button type="submit" class="btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Scam Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>AI-Powered Fake Job Detection &amp; Company Verification System</span>
+      </div>
+      <p class="footer-credit">
+        Designed &amp; Developed by <strong>Abinaya R</strong> • Built with Python, Scikit-learn, TF-IDF, Logistic Regression &amp; Modern Web Standards.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Custom JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
